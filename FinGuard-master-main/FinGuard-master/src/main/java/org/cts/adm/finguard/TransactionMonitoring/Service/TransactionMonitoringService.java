@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class TransactionMonitoringService {
@@ -37,9 +38,12 @@ public class TransactionMonitoringService {
     public FraudCheckResponse createTransaction(TransactionRequest transactionRequest){
         try {
             Transaction transaction = buildTransaction(transactionRequest);
+            String customId = transactionRequest.getCustomerId() + "-" + UUID.randomUUID().toString();
+            transaction.setTransactionId(customId);
             FraudCheckResponse result = evaluateFraud(transaction);
             Transaction savedTransaction = transactionMonitoringRepository.save(transaction);
             result.setTransactionId(savedTransaction.getTransactionId());
+
             result.setCreatedAt(savedTransaction.getCreatedAt());
             return result;
         } catch (RuntimeException e) {
@@ -47,10 +51,6 @@ public class TransactionMonitoringService {
         }
     }
 
-    public boolean detectFraud(Transaction transaction){
-        FraudCheckResponse result = evaluateFraud(transaction);
-        return result.isFraudDetected();
-    }
 
     public FraudCheckResponse detectFraud(TransactionRequest transactionRequest) {
         Transaction transaction = buildTransaction(transactionRequest);

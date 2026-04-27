@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 public class FraudCheckResponse {
 
-    private Long transactionId;
+    private String transactionId;
     private Long customerId;
     private boolean fraudDetected;
     private int riskScore;
@@ -14,11 +14,11 @@ public class FraudCheckResponse {
     private TransactionStatus status;
     private LocalDateTime createdAt;
 
-    public Long getTransactionId() {
+    public String getTransactionId() {
         return transactionId;
     }
 
-    public void setTransactionId(Long transactionId) {
+    public void setTransactionId(String transactionId) {
         this.transactionId = transactionId;
     }
 

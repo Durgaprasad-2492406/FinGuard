@@ -26,7 +26,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/customer/**",
                                          "/api/customer/kyc/**",
                                 "/api/customer/kyc/download/**",
-                                "/api/customer/transaction/add"
+                                "/api/customer/transaction/add",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**"
                         ).permitAll() // login only
                         .anyRequest().authenticated()
                 )

@@ -1,5 +1,8 @@
 package org.cts.adm.finguard.KycVerification.Controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.cts.adm.finguard.CustomerOnboarding.Service.CustomerLoginService;
 import org.cts.adm.finguard.CustomerOnboarding.Service.CustomerSignupService;
 import org.cts.adm.finguard.Jwt.JwtUtil;
@@ -32,7 +35,11 @@ public class KycVerificationController {
     }
 
 
-    @PostMapping("/upload")
+    @Operation(summary = "Upload KYC file")
+    @Parameter(name = "customerId", description = "Customer ID", required = true)
+    @ApiResponse(responseCode = "200", description = "File uploaded")
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    //@PostMapping("/upload")
     public ResponseEntity<String> uploadFile(
             @RequestParam("file") MultipartFile file,
             @RequestParam("customerId") Long customerId) throws Exception {
